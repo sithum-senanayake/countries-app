@@ -1,0 +1,27 @@
+name: Run Testim Tests After Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install Testim CLI
+      run: npm install -g @testim/testim-cli
+
+    - name: Wait for Vercel Deployment
+      run: |
+        echo "Waiting 60 seconds for Vercel to finish deployment..."
+        sleep 60 
+
+    - name: Run Testim Tests
+      run: |
+        testim --token "Kr5tvpz5sJ6cSqmGiKtd6h1BFdJbwKkVVaWvGLh4MMvWA1lbFv" \
+               --project "Uq2fzwleotK72p7DjH69" \
+               --label "test-run" \
+               --url https://countries-app-dun-eight.vercel.app/
